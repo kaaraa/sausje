@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://de6dnb2f3nvis"]
+
+[ext_resource type="Script" path="res://Fps Controller/Fps Controller.gd" id="1_l71i5"]
+[ext_resource type="Script" path="res://Fps Controller/Reticle.gd" id="2_inh2p"]
+[ext_resource type="PackedScene" uid="uid://dbjsk3os60gbi" path="res://Models/flatty.tscn" id="2_uqjep"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_utatx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hhx0e"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_l71i5")
+auto_bhop = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_utatx")
+
+[node name="WorldModel" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_hhx0e")
+
+[node name="Head" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+unique_name_in_owner = true
+cull_mask = 1048573
+
+[node name="flatty" parent="Head/Camera3D" instance=ExtResource("2_uqjep")]
+transform = Transform3D(-0.499695, -0.000608987, -0.0174391, 0, 0.499695, -0.0174497, 0.0174497, -0.0174391, -0.499391, 0.20439, -0.190081, -0.803362)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle" type="CenterContainer" parent="UserInterface" node_paths=PackedStringArray("reticle_lines", "player_controller")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_inh2p")
+reticle_lines = [NodePath("Top"), NodePath("Right"), NodePath("Bottom"), NodePath("Left")]
+player_controller = NodePath("../..")
+dot_radius = 1.0
+
+[node name="Top" type="Line2D" parent="UserInterface/Reticle"]
+position = Vector2(0, -10)
+points = PackedVector2Array(0, -9, 0, -27)
+width = 2.0
+default_color = Color(1, 1, 1, 0.784314)
+
+[node name="Right" type="Line2D" parent="UserInterface/Reticle"]
+position = Vector2(10, 0)
+points = PackedVector2Array(9, 0, 27, 0)
+width = 2.0
+default_color = Color(1, 1, 1, 0.784314)
+
+[node name="Bottom" type="Line2D" parent="UserInterface/Reticle"]
+position = Vector2(0, 10)
+points = PackedVector2Array(0, 9, 0, 27)
+width = 2.0
+default_color = Color(1, 1, 1, 0.784314)
+
+[node name="Left" type="Line2D" parent="UserInterface/Reticle"]
+position = Vector2(-10, -1)
+points = PackedVector2Array(-9, 0, -27, 0)
+width = 2.0
+default_color = Color(1, 1, 1, 0.784314)

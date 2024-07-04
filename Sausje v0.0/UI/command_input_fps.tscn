@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn522hpnju1f8"]
+
+[ext_resource type="Script" path="res://UI/uidebug.gd" id="1_qq1lt"]
+
+[node name="CommandInput" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CommandCanvas" type="CanvasLayer" parent="."]
+
+[node name="FPS Counter" type="Label" parent="CommandCanvas"]
+offset_right = 101.0
+offset_bottom = 75.0
+script = ExtResource("1_qq1lt")
